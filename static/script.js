@@ -1,6 +1,13 @@
 let expression = "";
 let savedValue = null;
 
+
+// Agregar la nueva función de backspace
+function backspace() {
+    expression = expression.slice(0, -1);
+    document.getElementById('display').value = expression;
+}
+
 function addToExpression(value) {
     // Si hay un valor guardado y empezamos una nueva expresión
     if (savedValue !== null && expression === "") {
