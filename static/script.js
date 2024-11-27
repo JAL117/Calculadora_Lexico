@@ -2,14 +2,14 @@ let expression = "";
 let savedValue = null;
 
 
-// Agregar la nueva función de backspace
+
 function backspace() {
     expression = expression.slice(0, -1);
     document.getElementById('display').value = expression;
 }
 
 function addToExpression(value) {
-    // Si hay un valor guardado y empezamos una nueva expresión
+  
     if (savedValue !== null && expression === "") {
         expression = savedValue.toString() + value;
         savedValue = null;
@@ -137,7 +137,7 @@ function renderSummaryTable(summary) {
         </tr>
         <tr>
             <td>Operadores</td>
-            <td>${summary.Operadores}</td>
+            <td>${summary.Operadores + summary.Parentesis}</td>
         </tr>
         <tr>
             <td>Enteros</td>
@@ -146,6 +146,10 @@ function renderSummaryTable(summary) {
         <tr>
             <td>Decimales</td>
             <td>${summary.Decimales}</td>
+        </tr>
+        <tr>
+           <td>Total</td>
+           <td>${summary.Operadores + summary.Enteros + summary.Decimales + summary.Parentesis}</td>
         </tr>
     `;
 }
@@ -199,11 +203,10 @@ function drawTree(treeData) {
     const root = d3.hierarchy(convertTree(treeData));
     treeLayout(root);
 
-    // Crear un grupo para todo el contenido del árbol
     const g = svg.append("g")
         .attr("transform", `translate(${padding},${verticalOffset + padding})`);
 
-    // Dibujar las líneas
+
     g.selectAll("line")
         .data(root.links())
         .enter()
@@ -215,7 +218,6 @@ function drawTree(treeData) {
         .attr("stroke", "white")
         .attr("stroke-width", 2);
 
-    // Dibujar los nodos
     const nodes = g.selectAll("g.node")
         .data(root.descendants())
         .enter()
@@ -249,14 +251,13 @@ function convertTree(tree) {
     };
 }
 
-// Inicialización cuando el DOM está listo
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Configurar el doble clic para limpiar el valor guardado
+   
     const mcButton = document.querySelector('button:nth-child(20)');
     if (mcButton) {
         mcButton.addEventListener('dblclick', clearSavedValue);
     }
 
-    // Inicializar el estado del botón MC
     updateMCButtonState();
 });

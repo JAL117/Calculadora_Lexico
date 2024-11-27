@@ -18,18 +18,18 @@ def calculate():
     save = data.get("save", False)
     
     try:
-        # Si hay un valor guardado y una nueva expresión, combinarlos
+
         if resultado_guardado is not None and expression:
             expression = str(resultado_guardado) + expression
         
-        # Parse y evaluación
+
         arbol = parser.parse(expression)
         result = eval_arbol(arbol)
         
-        # Analizar tokens
+
         tabla_tokens, resumen = analyze_chain(expression)
         
-        # Actualizar el valor guardado si se solicita
+  
         if save:
             resultado_guardado = result
         

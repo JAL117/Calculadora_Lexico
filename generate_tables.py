@@ -1,13 +1,12 @@
 import re
 
-import re
-
 def analyze_chain(cadena):
-    patron = r"(\d+\.\d+|\d+|[\+\-\*/])"
+
+    patron = r"(\d+\.\d+|\d+|[\+\-\*/\(\)])"
     tokens = re.findall(patron, cadena)
 
     tabla_tokens = []
-    resumen = {"Operadores": 0, "Enteros": 0, "Decimales": 0}
+    resumen = {"Operadores": 0, "Enteros": 0, "Decimales": 0, "Parentesis": 0}
 
     for token in tokens:
         if re.fullmatch(r"\d+\.\d+", token):
@@ -26,9 +25,14 @@ def analyze_chain(cadena):
             elif token == "/":
                 tipo = "Operador (División)"
             resumen["Operadores"] += 1
+        elif token in "()":
+            tipo = "Parentesis"
+            resumen["Parentesis"] += 1
         else:
             tipo = "Desconocido"
 
+      
         tabla_tokens.append({"Token": token, "Tipo": tipo})
 
     return tabla_tokens, resumen
+
